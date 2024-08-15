@@ -85,3 +85,4 @@ class VerificarSalidasTerminal(unittest.TestCase):
             resultado,
             "La ejecución no entrega el output esperado según las instrucciones",
         )
+
