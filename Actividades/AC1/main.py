@@ -7,18 +7,44 @@ from utilidades import Anime  # Debes utilizar esta nametupled
 #       Parte 1 - Cargar datos      #
 #####################################
 def cargar_animes(ruta_archivo: str) -> list:
-    return "COMPLETAR"
+    anime_total = []
+    with open(ruta_archivo, "r", encoding="utf-8") as archivo:
+        for linea in archivo:
+            datos_anime = linea.strip().split(",")
+            nombre = datos_anime[0]
+            capitulos = int(datos_anime[1])
+            puntajes = int(datos_anime[2])
+            estreno = int(datos_anime[3])
+            estudio = datos_anime[4]
+            genero = datos_anime[5].split(";")
+            anime = Anime(nombre, capitulos, puntajes, estreno, estudio, set(genero))
+            anime_total.append(anime)
+    return anime_total
+
 
 
 #####################################
 #        Parte 2 - Consultas        #
 #####################################
 def animes_por_estreno(animes: list) -> dict:
-    return "COMPLETAR"
-
+    anime_estreno = {}
+    for anime in animes:
+        if anime.estreno not in anime_estreno:
+            anime_estreno[anime.estreno] = []
+        anime_estreno[anime.estreno].append(anime.nombre)
+    return anime_estreno
 
 def descartar_animes(generos_descartados: set, animes: list) -> list:
-    return "COMPLETAR"
+    descartar_animes = []
+    for anime in animes:
+        agregar = True
+        for genero in anime.generos:
+            if genero not in generos_descartados:
+                agregar = False
+                break
+        if agregar:
+            descartar_animes.append(anime.nombre)
+    return descartar_animes
 
 
 def resumen_animes_por_ver(*animes: Anime) -> dict:
@@ -26,7 +52,14 @@ def resumen_animes_por_ver(*animes: Anime) -> dict:
 
 
 def estudios_con_genero(genero: str, **estudios: list) -> list:
-    return "COMPLETAR"
+    estudios_con_genero = []
+    for estudio, animes in estudios.items():
+        for anime in animes:
+            if genero in anime.generos:
+                estudios_con_genero.append(estudio)
+                break
+    return estudios_con_genero
+
 
 
 if __name__ == "__main__":
