@@ -44,14 +44,8 @@ class Predio:
         columna_max = columna_centro + radio
 
         # Crear un conjunto de coordenadas para las esquinas
-        esquinas = {
-            (fila_min, columna_min),
-            (fila_min, columna_max),
-            (fila_max, columna_min),
-            (fila_max, columna_max)
-        }
+        esquinas = {(fila_min, columna_min),(fila_min, columna_max),(fila_max, columna_min),(fila_max, columna_max)}
 
-        # Iterar sobre cada celda en el plano de riego
         for i in range(self.alto):
             for j in range(self.ancho):
                 # Verificar si la celda está dentro del área del cuadrado
@@ -134,11 +128,11 @@ class DCCultivo:
             for predio in self.predios:
                 if predio.codigo_predio == codigo:
                     celdas_eliminadas = predio.eliminar_cultivo(coordenadas)
+                    
                     if celdas_eliminadas > 0:
                         afectados.append([codigo, celdas_eliminadas])
-                    break
+                        
 
         afectados.sort(key=lambda x: (x[1], x[0]))
-
         return afectados
 

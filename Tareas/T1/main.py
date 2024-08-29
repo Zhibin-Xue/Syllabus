@@ -2,12 +2,16 @@ from dccultivo import DCCultivo, Predio
 import utils
 
 def menu_inicio():
-    print("¡Bienvenido a DCCultivo!")
-    print("*** Menú de Inicio ***")
-    print("[1] Crear predios")
-    print("[2] Salir del programa")
-    opcion = input("Indique su opción (1, 2): ")
-    return opcion
+    while True:
+        print("¡Bienvenido a DCCultivo!")
+        print("*** Menú de Inicio ***")
+        print("[1] Crear predios")
+        print("[2] Salir del programa")
+        opcion = input("Indique su opción (1, 2): ")
+        if opcion in ["1", "2"]:
+            return opcion
+        else:
+            print("Opción no válida. Inténtelo de nuevo.")
 
 def menu_acciones():
     print("*** Menú de Acciones ***")
@@ -33,6 +37,7 @@ def inicia_programa():
                     opcion_accion = menu_acciones()
 
                     if opcion_accion == "1":
+                        codigo_predio = input("Ingrese el código del predio a visualizar: ")
                         predio = None
                         for i in dccultivo.predios:
                             if i.codigo_predio == codigo_predio:
@@ -44,11 +49,11 @@ def inicia_programa():
                             print(f"El predio con código {codigo_predio} no existe.")
 
                     elif opcion_accion == "2":
-                        codigo_cultivo = int(input("Ingrese el código del cultivo: "))
+                        codigo_cultivo = input("Ingrese el código del cultivo: ")
                         alto = int(input("Ingrese el alto del bloque: "))
                         ancho = int(input("Ingrese el ancho del bloque: "))
-                        exito = dccultivo.buscar_y_plantar(codigo_cultivo, alto, ancho)
-                        if exito:
+                        correcto = dccultivo.buscar_y_plantar(codigo_cultivo, alto, ancho)
+                        if correcto:
                             print("Cultivo plantado exitosamente.")
                         else:
                             print("No se pudo plantar el cultivo en ningún predio.")
@@ -62,7 +67,7 @@ def inicia_programa():
                         print("Riego aplicado exitosamente.")
 
                     elif opcion_accion == "4":
-                        plagas_lista = utils.plagas()
+                        plagas_lista = utils.plagas(dccultivo)
                         resultado = dccultivo.detectar_plagas(plagas_lista)
                         print("Resultado de la eliminación de plagas:", resultado)
 
